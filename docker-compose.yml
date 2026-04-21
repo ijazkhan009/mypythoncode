@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  app:
+  web:
     image: ejazkhan1995/notes-app:latest
     container_name: notes-app-container
     ports:
