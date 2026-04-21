@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  app:
+    image: ejazkhan1995/notes-app:latest
+    container_name: notes-app-container
+    ports:
+      - "8000:8000"
