@@ -1,0 +1,50 @@
+@Library('shared') _
+pipeline {
+    agent { label 'localVm-agent' }
+
+    environment {
+        IMAGE_NAME = "notes-app:latest"
+        DOCKER_USER = "ejazkhan1995"
+    }
+
+    stages {
+
+        stage("Checkout Code") {
+            steps {
+                script {
+                    clone("https://github.com/ijazkhan009/mypythoncode.git", "master")
+                }
+            }
+        }
+
+        stage("Build Image") {
+            steps {
+                script {
+                    buildDocker(IMAGE_NAME)
+                }
+            }
+        }
+
+        stage("Test") {
+            steps {
+                echo "Running tests...."
+            }
+        }
+
+        stage("Push Image") {
+            steps {
+                script {
+                    pushDocker(IMAGE_NAME, DOCKER_USER, "dockerhub-creds")
+                }
+            }
+        }
+
+        stage("Deploy") {
+            steps {
+                script {
+                    deployApp(IMAGE_NAME)
+                }
+            }
+        }
+    }
+}
