@@ -11,6 +11,6 @@ def home():
 def test():
     return {"message": "test connection passed"}
 
-@app.get("/helloo")
+@app.get("/hello")
 def hello(name: str = "world"):
     return {"message": f"hello {name}"}
