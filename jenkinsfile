@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "notes-app:latest"
-        DOCKER_USER = "your-dockerhub-username"
+        DOCKER_USER = "ejazkhan1995"
     }
 
     stages {
