@@ -31,12 +31,12 @@ pipeline {
 
         echo "===== Checking for ERRORS only ====="
 
-        # ✅ FAIL ONLY if 'error' exists
+        #  FAIL ONLY if 'error' exists
         if grep -i "error" hadolint_report.txt > /dev/null; then
-            echo "❌ Hadolint Errors Found → Failing Build"
+            echo " Hadolint Errors Found → Failing Build"
             exit 1
         else
-            echo "✅ No critical errors"
+            echo " No critical errors"
         fi
         """
     }
