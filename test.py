@@ -2,9 +2,9 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/")
+@app.get("/test")
 def home():
-    print("hellooo")
+    print("hello")
     return {"message": "API is running"}
 
 @app.get("/test")
