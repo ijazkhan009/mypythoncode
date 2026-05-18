@@ -17,6 +17,31 @@ pipeline {
             }
         }
 
+        
+        stage("Hadolint Scan") {
+            steps {
+                sh """
+                echo "Running Hadolint Scan..."
+
+                docker run --rm -i \
+                  hadolint/hadolint < Dockerfile > hadolint_report.txt || true
+
+                cat hadolint_report.txt
+
+                echo "Checking for errors..."
+
+                # ✅ FAIL ONLY ON ERRORS
+                if grep -i "error" hadolint_report.txt; then
+                    echo " Hadolint Errors Found → Failing Build"
+                    exit 1
+                else
+                    echo "✅ No critical errors"
+                fi
+                """
+            }
+        }
+
+
         stage("Build Image") {
             steps {
                 script {
