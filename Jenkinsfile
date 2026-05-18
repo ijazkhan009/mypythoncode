@@ -18,29 +18,30 @@ pipeline {
         }
 
         
-        stage("Hadolint Scan") {
+  stage("Hadolint Scan") {
     steps {
         sh """
         echo "===== Running Hadolint Scan ====="
 
-        docker run --rm -i \
-          hadolint/hadolint < Dockerfile > hadolint_report.txt || true
+        # ✅ Disable colors
+        hadolint --no-color Dockerfile > hadolint_report.txt || true
 
         echo "===== Hadolint Report ====="
         cat hadolint_report.txt
 
         echo "===== Checking for ERRORS only ====="
 
-        #  FAIL ONLY if 'error' exists
-        if grep -i " error " hadolint_report.txt > /dev/null; then
-            echo " Hadolint Errors Found → Failing Build"
+        # ✅ Now grep works correctly
+        if grep -i "error" hadolint_report.txt > /dev/null; then
+            echo "❌ Hadolint Errors Found → Failing Build"
             exit 1
         else
-            echo " No critical errors (warnings/info ignored)"
+            echo "✅ No critical errors"
         fi
         """
     }
 }
+``
 
 
         stage("Build Image") {
