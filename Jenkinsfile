@@ -35,7 +35,7 @@ pipeline {
                     echo " Hadolint Errors Found → Failing Build"
                     exit 1
                 else
-                    echo "✅ No critical errors"
+                    echo " No critical errors"
                 fi
                 """
             }

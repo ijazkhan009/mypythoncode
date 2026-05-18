@@ -1,17 +1,30 @@
-# Use official Python image
-FROM python:3.11-slim
+# BAD: latest tag (warning)
+FROM python:latest
 
-# Set working directory
-WORKDIR /app
+# BAD: not absolute path (error)
+WORKDIR app
 
-# Copy project files
-COPY . .
+# BAD: using ADD instead of COPY (error)
+ADD . .
 
-# Install dependencies
-RUN pip install --no-cache-dir fastapi uvicorn
+# BAD: split RUN + not cleaning + not pinned packages
+RUN apt-get update
+RUN apt-get install -y curl wget
 
-# Expose API port
-EXPOSE 8000
+# BAD: no cleanup (info DL3009)
 
-# Run FastAPI server
+# BAD: using pip without version and cache
+RUN pip install fastapi uvicorn
+
+# BAD: multiple RUNs (info DL3059)
+RUN echo "Another unnecessary layer"
+
+# BAD: using root (warning)
+USER root
+
+# BAD: expose low port (not wrong but suspicious)
+EXPOSE 80
+
+# BAD: multiple CMD (warning)
+CMD ["echo", "Hello World"]
 CMD ["uvicorn", "test:app", "--host", "0.0.0.0", "--port", "8000"]

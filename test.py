@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/")
+@app.get("/test")
 def home():
     print("hello")
     return {"message": "API is running"}
@@ -11,6 +11,6 @@ def home():
 def test():
     return {"message": "test connection passed"}
 
-@app.get("/helloworld")
+@app.get("/hello")
 def hello(name: str = "world"):
     return {"message": f"hello {name}"}
