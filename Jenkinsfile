@@ -18,20 +18,19 @@ pipeline {
         }
 
         
-     stage("Hadolint Scan") {
+ stage("Hadolint Scan") {
     steps {
         sh """
         echo "===== Running Hadolint Scan ====="
 
-        docker run --rm -i \
-          hadolint/hadolint < Dockerfile > hadolint_report.txt || true
+        #  FORCE USE OF CONFIG FILE
+        hadolint --no-color -c ~/.config/hadolint.yaml Dockerfile > hadolint_report.txt || true
 
         echo "===== Hadolint Report ====="
         cat hadolint_report.txt
 
         echo "===== Checking for ERRORS only ====="
 
-        #  FAIL ONLY if 'error' exists
         if grep -i "error" hadolint_report.txt > /dev/null; then
             echo " Hadolint Errors Found → Failing Build"
             exit 1
