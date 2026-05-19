@@ -5,7 +5,7 @@ app = FastAPI()
 @app.get("/test")
 def home():
     print("hellooworlds")
-    return {"message": "API is running"}
+    return {"message": "APII is running"}
 
 @app.get("/test")
 def test():
